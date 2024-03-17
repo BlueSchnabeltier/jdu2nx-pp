@@ -8,8 +8,8 @@ A modified version of one of the automodders from c0llydoll/Just-Dance-UbiArt-Nx
 4. Set up a Discord account that you'll never touch again (in your browser)
 5. Open settings, click "Advanced", and then toggle "Developer Mode"
 6. Make a new server on the account
-7. Right-click the server, click "Copy Server ID" and paste it in the config
-8. Right-click a channel in the server, click "Copy Channel ID" and paste it in the config
+7. Right-click the server, click "Copy Server ID" and paste it in the config as "guild_id"
+8. Right-click a channel in the server, click "Copy Channel ID" and paste it in the config as "channel_id"
 9. Invite JDH to the server with this link: http://gg.gg/justdancehelper/
 10. Turn on your bookmarks bar if it isn't there already
 11. Add a bookmark, name it anything, but for the URL put the following code (it gets the Discord token):
