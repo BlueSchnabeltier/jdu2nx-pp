@@ -2906,12 +2906,13 @@ tpl['COMPONENTS'][0]['trackData']['path']=tpl['COMPONENTS'][0]['trackData']['pat
 json.dump(tpl,open(fr'temp/{name.lower()}_nx/cache/itf_cooked/nx/world/maps/{name.lower()}/audio/{name.lower()}_musictrack.tpl.ckd', 'w'))
 
 videoscoachpath = fr'temp/{name.lower()}_nx/world/maps/{name.lower()}/videoscoach'
-
 nohud = client.get_nohud(name)
+
+os.mkdir(videoscoachpath)
 
 try:
     r = requests.get(nohud["high"], allow_redirects=True)
-    open(videoscoachpath + name.lower() + '.ogg', 'wb').write(r.content)
+    open(videoscoachpath + name.lower() + '.webm', 'wb').write(r.content)
     print("[INFO]  The nohud was downloaded")
 except:
     print("[ERROR] Failed to get the nohud!")
