@@ -1,10 +1,14 @@
-# JDU2NX++
+# jdu2nx++
 A modified version of one of the automodders from c0llydoll/Just-Dance-UbiArt-Nx-Automodder. It takes a codename and coach count and then does the rest!
 
 ## Setup Guide
 1. Download the .zip from the releases tab and extract it somewhere
 2. Install Git & Python (if you haven't already)
-3. Run "python -m pip install -r requirements.txt" in this directory
+3. Run following command in  this directory
+
+```bash
+python -m pip install -r requirements.txt
+```
 4. Set up a Discord account that you'll never touch again (in your browser)
 5. Open settings, click "Advanced", and then toggle "Developer Mode"
 6. Make a new server on the account
