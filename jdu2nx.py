@@ -2905,33 +2905,63 @@ tpl=json.loads(readCKD(fr'temp/{name.lower()}_nx/cache/itf_cooked/nx/world/maps/
 tpl['COMPONENTS'][0]['trackData']['path']=tpl['COMPONENTS'][0]['trackData']['path'].replace('wav','ogg')
 json.dump(tpl,open(fr'temp/{name.lower()}_nx/cache/itf_cooked/nx/world/maps/{name.lower()}/audio/{name.lower()}_musictrack.tpl.ckd', 'w'))
 
-videoscoachpath = fr'temp/{name.lower()}_nx/world/maps/{name.lower()}/videoscoach'
+videoscoachpath = fr'temp/{name.lower()}_nx/world/maps/{name.lower()}/videoscoach/'
 nohud = client.get_nohud(name)
-
-os.mkdir(videoscoachpath)
 
 try:
     r = requests.get(nohud["high"], allow_redirects=True)
-    open(videoscoachpath + name.lower() + '.webm', 'wb').write(r.content)
+    open(videoscoachpath + name.lower() + '.vp9.720.webm', 'wb').write(r.content)
     print("[INFO]  The nohud was downloaded")
 except:
     print("[ERROR] Failed to get the nohud!")
 
-audiopath = fr'temp/{name.lower()}_nx/world/maps/{name.lower()}/audio/'
-
 try:
     r = requests.get(nohud["audio"], allow_redirects=True)
-    open(audiopath + name.lower() + '.ogg', 'wb').write(r.content)
+    open('temp/' + name.lower() + '.ogg', 'wb').write(r.content)
     print("[INFO]  The audio was downloaded")
 except:
     print("[ERROR] Failed to get the audio!")
+
+def JDUAudioCrop():
+    # Searches for the necessary file
+    musictrack = fr'temp/{name.lower()}_nx/cache/itf_cooked/nx/world/maps/{name.lower()}/audio/{name.lower()}_musictrack.tpl.ckd'
+    audiofile = fr'temp/' + name.lower() + '.ogg' 
+    # Checks if the musictrack has a empty byte at the end, and if it has, creates a copy of the file without it
+    with open(musictrack, 'rb') as file_in:
+        with open("temp/temp_musictrack.tpl.ckd", 'wb') as file_out:
+            data = file_in.read()
+            while data.endswith(b'\x00'):
+                data = data[:-1]
+            file_out.write(data)
+  
+    # Opens the musictrack
+    with open("temp/temp_musictrack.tpl.ckd", "r", encoding='utf-8') as mt:
+        musictrackData = json.load(mt)
+    
+    # Gets startBeat value
+    startBeatVal = musictrackData['COMPONENTS'][0]['trackData']['structure']['startBeat']
+    
+    # Gets the marker value
+    valMarker = musictrackData['COMPONENTS'][0]['trackData']['structure']['markers'][abs(startBeatVal)]
+    
+    # Turns it into a positive value (doesn't matter if the value is positive already or not) and divide it
+    msVal = int(valMarker / 48)
+    
+    # Crops the audio (and the AMB, if chosen)
+    subprocess.check_call('"bin\\ffmpeg.exe" -y -i "' + audiofile + '" -ss ' + str(msVal) + 'ms -filter:a "volume=5dB" "temp\\' + name.lower() + '.ogg"')
+
+JDUAudioCrop()
+print("[INFO]  Cropped Audio!")
+
+audiopath = fr'temp/{name.lower()}_nx/world/maps/{name.lower()}/audio/'
+shutil.copy('temp/' + name.lower() + '.ogg', audiopath)
 
 # Pack to the directory
 
 thefuckingpathorsomeshit = fr'temp/{name.lower()}_nx/'
 
 try:
-    unpakke_output = subprocess.call(["bin/unpakke.exe", "bin/modules/ubiart.umod", "pack", os.path.abspath(thefuckingpathorsomeshit), os.path.abspath(os.path.join("output", name.lower() + ".ipk"))])
+    unpakke_output = subprocess.call(["bin/unpakke.exe", "bin/modules/ubiart.umod", "pack", os.path.abspath(thefuckingpathorsomeshit), os.path.abspath(os.path.join("output", name.lower() + "_nx.ipk"))])
 except Exception as e:
     print("[ERROR] The .ipk could not be packed! Error: " + e)
 
