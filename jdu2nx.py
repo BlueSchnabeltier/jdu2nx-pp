@@ -2909,7 +2909,7 @@ videoscoachpath = fr'temp/{name.lower()}_nx/world/maps/{name.lower()}/videoscoac
 nohud = client.get_nohud(name)
 
 try:
-    r = requests.get(nohud["high"], allow_redirects=True)
+    r = requests.get(nohud["ultra"], allow_redirects=True)
     open(videoscoachpath + name.lower() + '.vp9.720.webm', 'wb').write(r.content)
     print("[INFO]  The nohud was downloaded")
 except:
