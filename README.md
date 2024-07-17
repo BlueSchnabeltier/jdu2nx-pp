@@ -1,3 +1,8 @@
+# Discontinued
+If you encounter any issues with this automodder please seek help from ChatGPT or some other AI.
+
+---
+
 # jdu2nx++
 A modified version of one of the automodders from c0llydoll/Just-Dance-UbiArt-Nx-Automodder. It takes a codename and coach count and then does the rest!
 
